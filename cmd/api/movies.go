@@ -22,7 +22,8 @@ func (app *application) showMovieHandler(w http.ResponseWriter, r *http.Request)
 	fmt.Println("Is request reaching¸ up to here ")
 	id, err := app.readIDParam(r)
 	if err != nil {
-		http.NotFound(w, r)
+		//Use the new NotFoundResponse() helper
+		app.notFoundResposne(w, r)
 		return
 	}
 	fmt.Fprintf(w, "show the details of the movie %d\n", id)
@@ -39,13 +40,8 @@ func (app *application) showMovieHandler(w http.ResponseWriter, r *http.Request)
 	//endcode the struct to json and send it as HTTP response
 	err = app.writeJSON(w, http.StatusOK, envelop{"movie": movie}, nil)
 	if err != nil {
-		app.logger.Println(err)
-		http.Error(
-			w,
-			"The server encountered a problem and could not proccess your request",
-			http.StatusInternalServerError,
-		)
-
+		//Use the new serverErrorResponse() helper
+		app.serverErrorResponse(w, r, err)
 	}
 
 }
