@@ -33,7 +33,7 @@ func main() {
 	flag.IntVar(
 		&cfg.port,
 		"port",
-		4001,
+		4000,
 		"API server port",
 	)
 	//fmt.Println("Configure the Enviorment Variable --2")
